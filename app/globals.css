@@ -1,33 +1,72 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+main{
+  height: 300vh;
+}
+.mainSection {
+  height: 200vh;
+  display: flex;
+  flex-direction: column;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+
+.firstSection{
+  height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+.firstSection > .back1{
+  animation: fade-in linear ;
+  animation-timeline: view();
+  /*animation-range-start: 10px;
+  animation-range-end: 1500px;
+  animation-range: contain;*/
+  animation-range: exit -50px ;
+  transform-origin:center;
+
+}
+
+@keyframes fade-in {
+  25% {scale: 2; opacity:0.9;z-index: 1;}
+  100% {scale: 5; opacity:0;z-index: 3;}
+}
+.secondSection {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+.secondSection > .back2 {
+  display: none;
+}
+
+
+.secondSection.active {
+  position: fixed; /* Hace que la segunda sección cubra toda la pantalla */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+
+.secondSection.active > .back2 {
+  display: block;
+  animation: fade-in-second 2s ease-out ;
+}
+
+@keyframes fade-in-second {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+    z-index: 1;
   }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    z-index: 1;
   }
 }

@@ -1,7 +1,14 @@
 {
   "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "allowJs": true,
+    "checkJs": true,
     "paths": {
       "@/*": ["./*"]
-    }
-  }
+    },
+    "typeRoots": ["./node_modules/@types"]
+  },
+  "include": ["src/**/*", "custom.d.ts"],
+  "exclude": ["node_modules"]
 }
