@@ -54,7 +54,11 @@ const Render = () => {
       </Suspense>
 
       <Piso />
-      <OrbitControls />
+      <OrbitControls  
+          enableZoom={true} 
+          enablePan={true} 
+          maxPolarAngle={Math.PI / 2} 
+      />
 
       {/* Cargar el fondo HDRI */}
       <HDRIBackground />
