@@ -5,7 +5,6 @@ main{
   height: 300vh;
 }
 .mainSection {
-  height: 200vh;
   display: flex;
   flex-direction: column;
 }
