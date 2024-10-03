@@ -4,7 +4,8 @@ import { Canvas, useThree } from '@react-three/fiber';
 import { OrbitControls, useGLTF , Plane} from '@react-three/drei';
 import { NotEqualStencilFunc } from 'three';
 import {EXRLoader} from 'three/examples/jsm/loaders/EXRLoader.js';
-import { EquirectangularReflectionMapping, Scene } from 'three';
+import { EquirectangularReflectionMapping } from 'three';
+import * as THREE from 'three'; 
 
 const Model = ({ url }) => {
   const { scene } = useGLTF(url);
@@ -22,7 +23,7 @@ const Piso = () => {
 
 
   const HDRIBackground = () => {
-    const { scene } = useThree(); // Obtener la escena del Canvas
+    const { scene, camera } = useThree(); // Obtener la escena del Canvas
   
     useEffect(() => {
       const exrLoader = new EXRLoader();
@@ -30,6 +31,16 @@ const Piso = () => {
         texture.mapping = EquirectangularReflectionMapping;
         scene.environment = texture; // Asignar textura de entorno
         scene.background = texture;    // Asignar textura de fondo
+        if (scene) {
+          const bbox = new THREE.Box3().setFromObject(scene);
+          const center = bbox.getCenter(new THREE.Vector3());
+          const size = bbox.getSize(new THREE.Vector3()).length();
+      
+          // Ajustar la posición de la cámara según el tamaño del modelo
+          camera.position.set(center.x, center.y + size / 2, center.z + size * 2);
+          camera.lookAt(center);
+        }
+      
       }, undefined, (error) => {
         console.error('Error loading HDRI:', error); // Manejar errores de carga
       });
