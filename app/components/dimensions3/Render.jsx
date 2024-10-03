@@ -30,20 +30,25 @@ const Piso = () => {
         texture.mapping = EquirectangularReflectionMapping;
         scene.environment = texture; // Asignar textura de entorno
         scene.background = texture;    // Asignar textura de fondo
-        texture.repeat.set(0.5, 0.5); // Ajusta la repetición de la textura
-        texture.wrapS = THREE.RepeatWrapping; // Repite la textura en el eje S
-        texture.wrapT = THREE.RepeatWrapping; // Repite la textura en el eje T
+
+      // Repite la textura en el eje T
         if (scene) {
+          //escena cubo
+          /*
           const bbox = new THREE.Box3().setFromObject(scene);
           const center = bbox.getCenter(new THREE.Vector3());
-          const size = bbox.getSize(new THREE.Vector3()).length();
-      
-          // Ajustar la posición de la cámara según el tamaño del modelo
-          camera.position.set(center.x, center.y + size / 4, center.z + size); // Acércate al modelo
-          camera.lookAt(center);
+          const size = bbox.getSize(new THREE.Vector3()).length();*/
+          //escena esfera
+          const sphereGeometry = new THREE.SphereGeometry(500, 60, 40); // Crea una esfera grande
+          const sphereMaterial = new THREE.MeshBasicMaterial({ map: texture, side: THREE.BackSide }); // Asegúrate de que sea el lado interior
+          const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+          scene.add(sphere);
+          // Ajustar la posición de la cámara según el tamaño del modelo para cubo
+         /* camera.position.set(center.x, center.y + size / 4, center.z + size); // Acércate al modelo
+          camera.lookAt(center);*/
     
           // Cambiar el FOV de la cámara si es necesario
-          camera.fov = 30; // Ajustar el campo de visión
+          camera.fov = 50; // Ajustar el campo de visión
           camera.updateProjectionMatrix();
         }
       
@@ -58,20 +63,20 @@ const Piso = () => {
 
 const Render = () => {
   return (
-    <Canvas camera={{ position: [-4, 2, 7] , rotation: [-Math.PI / 2, -3, 1]} } className='mainScene' >
+    <Canvas camera={{ position: [-4, 2, 7] , rotation: [Math.PI / 2, Math.PI / 3, 1]} } className='mainScene' >
       <ambientLight intensity={1} />
       <directionalLight position={[0, 0, 5]} />
       <directionalLight color="red" position={[0, 1, 5]} />
 
       <Suspense fallback={null}>
-        <Model url="/chubaca.glb" />
+        <Model url="/chubaca.glb" position={[0, 2, 0]}/>
       </Suspense>
 
       <Suspense fallback={NotEqualStencilFunc}>
-        <Model url="/anillos.glb" />
+        <Model url="/anillos.glb" position={[0, 2, 0]} />
       </Suspense>
 
-      <Piso />
+      <Piso position={[0, 2, 0]}/>
       
       <OrbitControls 
           enableZoom={true} 
