@@ -40,7 +40,7 @@ const Piso = () => {
 
 const Render = () => {
   return (
-    <Canvas camera={{ position: [-4, 3, 3] }}>
+    <Canvas camera={{ position: [-4, 2, 7] }}>
       <ambientLight intensity={1} />
       <directionalLight position={[0, 0, 5]} />
       <directionalLight color="red" position={[0, 1, 5]} />
